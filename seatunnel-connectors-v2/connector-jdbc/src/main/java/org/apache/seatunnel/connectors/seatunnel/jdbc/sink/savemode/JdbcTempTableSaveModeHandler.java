@@ -19,32 +19,54 @@ package org.apache.seatunnel.connectors.seatunnel.jdbc.sink.savemode;
 
 import org.apache.seatunnel.api.sink.DataSaveMode;
 import org.apache.seatunnel.api.sink.DefaultSaveModeHandler;
+import org.apache.seatunnel.api.sink.SaveModeHandler;
 import org.apache.seatunnel.api.sink.SchemaSaveMode;
 import org.apache.seatunnel.api.table.catalog.Catalog;
 import org.apache.seatunnel.api.table.catalog.CatalogTable;
 import org.apache.seatunnel.api.table.catalog.TablePath;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class JdbcSaveModeHandler extends DefaultSaveModeHandler {
-    public boolean createIndex;
+public class JdbcTempTableSaveModeHandler extends JdbcSaveModeHandler implements SaveModeHandler {
+    @Getter private final TablePath tempTablePath;
 
-    public JdbcSaveModeHandler(
+    @Getter private final CatalogTable tempCatalogTable;
+
+    public JdbcTempTableSaveModeHandler(
             SchemaSaveMode schemaSaveMode,
             DataSaveMode dataSaveMode,
             Catalog catalog,
             TablePath tablePath,
             CatalogTable catalogTable,
+            TablePath tempTablePath,
+            CatalogTable tempCatalogTable,
             String customSql,
             boolean createIndex) {
-        super(schemaSaveMode, dataSaveMode, catalog, tablePath, catalogTable, customSql);
-        this.createIndex = createIndex;
+        super(
+                schemaSaveMode,
+                dataSaveMode,
+                catalog,
+                tablePath,
+                catalogTable,
+                customSql,
+                createIndex);
+        this.tempTablePath = tempTablePath;
+        this.tempCatalogTable = tempCatalogTable;
     }
 
     @Override
-    protected void createTable() {
-        createTablePreCheck(tablePath, catalog, catalogTable);
-        catalog.createTable(tablePath, catalogTable, true, createIndex);
+    protected void createSchemaWhenNotExist() {
+        if (!tableExists()) {
+            createTable();
+        }
+        if (tempTablePath != null && tempCatalogTable != null) {
+            if (!catalog.tableExists(tempTablePath)) {
+                DefaultSaveModeHandler.createTablePreCheck(
+                        tempTablePath, catalog, tempCatalogTable);
+                catalog.createTable(tempTablePath, tempCatalogTable, true, true);
+            }
+        }
     }
 }

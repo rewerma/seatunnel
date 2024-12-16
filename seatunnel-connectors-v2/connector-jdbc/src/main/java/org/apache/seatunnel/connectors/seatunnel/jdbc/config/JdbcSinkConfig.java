@@ -43,8 +43,11 @@ public class JdbcSinkConfig implements Serializable {
     private List<String> primaryKeys;
     private boolean enableUpsert;
     @Builder.Default private boolean isPrimaryKeyUpdated = true;
+    private WriteMode writeMode;
+    private String tempTableName;
+    private String tempColumnRowKind;
+    private String tempColumnBatchCode;
     private boolean supportUpsertByInsertOnly;
-    private boolean useCopyStatement;
     @Builder.Default private boolean createIndex = true;
 
     public static JdbcSinkConfig of(ReadonlyConfig config) {
@@ -58,8 +61,19 @@ public class JdbcSinkConfig implements Serializable {
         builder.isPrimaryKeyUpdated(config.get(IS_PRIMARY_KEY_UPDATED));
         builder.supportUpsertByInsertOnly(config.get(SUPPORT_UPSERT_BY_INSERT_ONLY));
         builder.simpleSql(config.get(JdbcOptions.QUERY));
-        builder.useCopyStatement(config.get(JdbcOptions.USE_COPY_STATEMENT));
         builder.createIndex(config.get(JdbcCatalogOptions.CREATE_INDEX));
+        builder.writeMode(config.get(JdbcOptions.WRITE_MODE));
+        builder.tempTableName(config.get(JdbcOptions.TEMP_TABLE_NAME));
+        builder.tempColumnBatchCode(config.get(JdbcOptions.TEMP_COLUMN_BATCH_CODE));
+        builder.tempColumnRowKind(config.get(JdbcOptions.TEMP_COLUMN_ROW_KIND));
         return builder.build();
+    }
+
+    public enum WriteMode {
+        SQL,
+        COPY,
+        COPY_SQL,
+        MERGE,
+        COPY_MERGE,
     }
 }
