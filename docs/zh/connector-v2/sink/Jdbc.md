@@ -218,11 +218,11 @@ Sink插件常用参数，请参考 [Sink常用选项](../sink-common-options.md)
 
 ### temp_column_batch_code [String]
 
-在 MERGE/COPY_MERGE 写入模式中用于批量写入数据的临时列。如果未指定，系统将默认使用 `_st_batch_code` 作为列名。
+在 MERGE/COPY_MERGE 写入模式中用于批量写入数据的临时列。如果未指定，系统将默认使用 `__st_batch_code` 作为列名。
 
 ### temp_column_row_kind [String]
 
-在 MERGE/COPY_MERGE 写入模式中用于识别数据类型的临时列。如果未指定，系统将默认使用 `_st_row_kind` 作为列名。 
+在 MERGE/COPY_MERGE 写入模式中用于识别数据类型的临时列。如果未指定，系统将默认使用 `__st_row_kind` 作为列名。 
 
 ## tips
 

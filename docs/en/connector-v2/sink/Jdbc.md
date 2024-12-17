@@ -230,11 +230,11 @@ The temporary table name used in the MERGE/COPY_MERGE write mode. If not specifi
 
 ### temp_column_batch_code [String]
 
-The temporary column used to batch write data in the MERGE/COPY_MERGE write mode. If not specified, the system will default to `_st_batch_code` column.
+The temporary column used to batch write data in the MERGE/COPY_MERGE write mode. If not specified, the system will default to `__st_batch_code` column.
 
 ### temp_column_row_kind [String]
 
-The temporary column used to identify the type of data in the MERGE/COPY_MERGE write mode. If not specified, the system will default to `_st_row_kind` column.
+The temporary column used to identify the type of data in the MERGE/COPY_MERGE write mode. If not specified, the system will default to `__st_row_kind` column.
 
 ## tips
 

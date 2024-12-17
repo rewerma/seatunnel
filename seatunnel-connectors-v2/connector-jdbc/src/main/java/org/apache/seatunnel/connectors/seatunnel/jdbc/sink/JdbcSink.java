@@ -341,21 +341,10 @@ public class JdbcSink
         JdbcSinkConfig.WriteMode writeMode = config.get(JdbcOptions.WRITE_MODE);
         if (writeMode == JdbcSinkConfig.WriteMode.MERGE
                 || writeMode == JdbcSinkConfig.WriteMode.COPY_MERGE) {
-            String tempTableName = config.get(JdbcOptions.TEMP_TABLE_NAME);
-
-            if (!StringUtils.isBlank(tempTableName)) {
-                tempTablePath =
-                        TablePath.of(
-                                tablePath.getDatabaseName(),
-                                tablePath.getSchemaName(),
-                                tempTableName);
-            } else {
-                tempTablePath =
-                        TablePath.of(
-                                tablePath.getDatabaseName(),
-                                tablePath.getSchemaName(),
-                                tablePath.getTableName() + "_tmp");
-            }
+            String tempTableName = jdbcSinkConfig.getTempTableName();
+            tempTablePath =
+                    TablePath.of(
+                            tablePath.getDatabaseName(), tablePath.getSchemaName(), tempTableName);
         }
         return tempTablePath;
     }

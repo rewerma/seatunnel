@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.seatunnel.api.sink.SinkReplaceNameConstant.REPLACE_TARGET_TABLE_NAME_KEY;
+
 @SuppressWarnings("checkstyle:MagicNumber")
 public interface JdbcOptions {
 
@@ -162,19 +164,19 @@ public interface JdbcOptions {
     Option<String> TEMP_TABLE_NAME =
             Options.key("temp_table_name")
                     .stringType()
-                    .noDefaultValue()
+                    .defaultValue(REPLACE_TARGET_TABLE_NAME_KEY + "_tmp")
                     .withDescription("temp table name");
 
     Option<String> TEMP_COLUMN_BATCH_CODE =
             Options.key("temp_column_batch_code")
                     .stringType()
-                    .defaultValue("_st_batch_code")
+                    .defaultValue("__st_batch_code")
                     .withDescription("temp column batch code for merge");
 
     Option<String> TEMP_COLUMN_ROW_KIND =
             Options.key("temp_column_row_kind")
                     .stringType()
-                    .defaultValue("_st_row_kind")
+                    .defaultValue("__st_row_kind")
                     .withDescription("temp column row kind for merge");
 
     Option<Boolean> SUPPORT_UPSERT_BY_INSERT_ONLY =
