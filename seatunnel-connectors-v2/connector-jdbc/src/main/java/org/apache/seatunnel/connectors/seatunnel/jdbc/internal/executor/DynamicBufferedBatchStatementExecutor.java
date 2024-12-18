@@ -274,8 +274,8 @@ public class DynamicBufferedBatchStatementExecutor
         String deleteSQL =
                 String.format(
                         "DELETE FROM %s WHERE EXISTS (SELECT 1 FROM %s tmp WHERE tmp.%s=? AND tmp.%s=? AND %s)",
-                        table,
-                        tmpTable,
+                        dialect.tableIdentifier(jdbcSinkConfig.getDatabase(), table),
+                        dialect.tableIdentifier(jdbcSinkConfig.getDatabase(), tmpTable),
                         jdbcSinkConfig.getTempColumnBatchCode(),
                         jdbcSinkConfig.getTempColumnRowKind(),
                         condition);
@@ -321,7 +321,8 @@ public class DynamicBufferedBatchStatementExecutor
         String deleteTmpSQL =
                 String.format(
                         "DELETE FROM %s WHERE %s=?",
-                        tmpTable, jdbcSinkConfig.getTempColumnBatchCode());
+                        dialect.tableIdentifier(jdbcSinkConfig.getDatabase(), tmpTable),
+                        jdbcSinkConfig.getTempColumnBatchCode());
         try (PreparedStatement pStmt = connection.prepareStatement(deleteTmpSQL)) {
             pStmt.setString(1, batchCode);
             pStmt.executeUpdate();
