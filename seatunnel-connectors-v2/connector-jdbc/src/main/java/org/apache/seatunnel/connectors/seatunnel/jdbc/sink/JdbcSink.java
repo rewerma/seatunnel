@@ -50,7 +50,7 @@ import org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcSinkConfig;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.exception.JdbcConnectorException;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.JdbcDialect;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.dialectenum.FieldIdeEnum;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.sink.savemode.JdbcTempTableSaveModeHandler;
+import org.apache.seatunnel.connectors.seatunnel.jdbc.sink.savemode.JdbcSaveModeHandler;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.state.JdbcAggregatedCommitInfo;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.state.JdbcSinkState;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.state.XidInfo;
@@ -284,7 +284,7 @@ public class JdbcSink
                     }
 
                     return Optional.of(
-                            new JdbcTempTableSaveModeHandler(
+                            new JdbcSaveModeHandler(
                                     schemaSaveMode,
                                     dataSaveMode,
                                     catalog,

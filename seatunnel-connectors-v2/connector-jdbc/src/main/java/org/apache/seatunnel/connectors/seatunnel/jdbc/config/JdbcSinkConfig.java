@@ -28,9 +28,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
-import static org.apache.seatunnel.api.sink.SinkReplaceNameConstant.REPLACE_TARGET_TABLE_NAME_KEY;
 import static org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcOptions.ENABLE_UPSERT;
 import static org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcOptions.IS_PRIMARY_KEY_UPDATED;
+import static org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcOptions.REPLACE_TARGET_TABLE_NAME_KEY;
 import static org.apache.seatunnel.connectors.seatunnel.jdbc.config.JdbcOptions.SUPPORT_UPSERT_BY_INSERT_ONLY;
 
 @Data

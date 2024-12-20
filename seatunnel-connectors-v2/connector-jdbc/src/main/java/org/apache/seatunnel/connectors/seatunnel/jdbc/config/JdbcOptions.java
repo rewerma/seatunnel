@@ -27,8 +27,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.seatunnel.api.sink.SinkReplaceNameConstant.REPLACE_TARGET_TABLE_NAME_KEY;
-
 @SuppressWarnings("checkstyle:MagicNumber")
 public interface JdbcOptions {
 
@@ -159,7 +157,9 @@ public interface JdbcOptions {
             Options.key("write_mode")
                     .enumType(JdbcSinkConfig.WriteMode.class)
                     .defaultValue(JdbcSinkConfig.WriteMode.SQL)
-                    .withDescription("write mode: SQL/COPY_SQL/MERGE/COPY_MERGE");
+                    .withDescription("write mode: SQL/COPY/COPY_SQL/MERGE/COPY_MERGE");
+
+    String REPLACE_TARGET_TABLE_NAME_KEY = "${target_table}";
 
     Option<String> TEMP_TABLE_NAME =
             Options.key("temp_table_name")
