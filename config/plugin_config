@@ -62,6 +62,7 @@ connector-iceberg
 connector-influxdb
 connector-iotdb
 connector-jdbc
+connector-jdbc-mysql
 connector-kafka
 connector-kudu
 connector-maxcompute
