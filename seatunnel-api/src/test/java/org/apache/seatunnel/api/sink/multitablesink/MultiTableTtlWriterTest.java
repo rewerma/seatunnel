@@ -73,8 +73,8 @@ public class MultiTableTtlWriterTest {
         List<ConcurrentMap<SinkIdentifier, SinkWriter<SeaTunnelRow, ?, ?>>> ttlWritersWithIndex =
                 multiTableSinkWriter.getSinkWritersWithIndex();
 
-        Assertions.assertEquals(ttlWritersWithIndex.size(), 1);
-        Assertions.assertEquals(ttlWritersWithIndex.get(0).size(), threads);
+        Assertions.assertEquals(1, ttlWritersWithIndex.size());
+        Assertions.assertEquals(threads, ttlWritersWithIndex.get(0).size());
 
         Map<String, MultiTableTtlWriter> multiTableTtlWritersWithTableId = new HashMap<>();
 
