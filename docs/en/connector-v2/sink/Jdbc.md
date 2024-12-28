@@ -58,6 +58,7 @@ support `Xa transactions`. You can set `is_exactly_once=true` to enable it.
 | custom_sql                                | String  | No       | -                            |
 | enable_upsert                             | Boolean | No       | true                         |
 | create_index                              | Boolean | No       | true                         |
+| use_copy_statement                        | Boolean | No       | false                        |
 | write_mode                                | Enum    | No       | sql                          |
 | temp_table_name                           | String  | No       | -                            |
 | temp_column_batch_code                    | String  | No       | -                            |

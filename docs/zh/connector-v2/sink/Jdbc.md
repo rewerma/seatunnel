@@ -55,6 +55,7 @@
 | data_save_mode                            | Enum    | 否    | APPEND_DATA                  |
 | custom_sql                                | String  | 否    | -                            |
 | enable_upsert                             | Boolean | 否    | true                         |
+| use_copy_statement                        | Boolean | 否    | false                        |
 | write_mode                                | Enum    | 否    | sql                          |
 | temp_table_name                           | String  | 否    | -                            |
 | temp_column_batch_code                    | String  | 否    | -                            |
