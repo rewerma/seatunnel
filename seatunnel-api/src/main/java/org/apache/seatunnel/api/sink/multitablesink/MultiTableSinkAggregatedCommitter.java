@@ -67,9 +67,6 @@ public class MultiTableSinkAggregatedCommitter
                         ((SupportMultiTableSinkAggregatedCommitter<?>) aggCommitter)
                                 .initMultiTableResourceManager(aggCommitters.size(), 1);
             }
-            resourceManager =
-                    ((SupportMultiTableSinkAggregatedCommitter<?>) aggCommitter)
-                            .initMultiTableResourceManager(aggCommitters.size(), 1);
             break;
         }
         if (resourceManager != null) {
