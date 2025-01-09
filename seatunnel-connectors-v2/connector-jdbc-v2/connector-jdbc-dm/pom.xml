@@ -37,7 +37,6 @@
         <dependency>
             <groupId>com.dameng</groupId>
             <artifactId>DmJdbcDriver18</artifactId>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -37,7 +37,6 @@
         <dependency>
             <groupId>com.ibm.db2.jcc</groupId>
             <artifactId>db2jcc</artifactId>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
