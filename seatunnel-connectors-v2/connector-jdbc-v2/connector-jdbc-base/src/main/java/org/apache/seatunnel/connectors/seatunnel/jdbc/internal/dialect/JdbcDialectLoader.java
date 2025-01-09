@@ -31,7 +31,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-/** Utility for working with {@link JdbcDialect}. */
+/**
+ * Utility for working with {@link JdbcDialect}.
+ */
 public final class JdbcDialectLoader {
 
     private static final Logger LOG = LoggerFactory.getLogger(JdbcDialectLoader.class);
@@ -39,7 +41,10 @@ public final class JdbcDialectLoader {
     private static final ConcurrentMap<String, JdbcDialect> dialectCache =
             new ConcurrentHashMap<>();
 
-    private JdbcDialectLoader() {}
+    private static final String JDBC_URL_PREFIX = "jdbc:";
+
+    private JdbcDialectLoader() {
+    }
 
     public static JdbcDialect load(String dbType, String compatibleMode) {
         return load(dbType, compatibleMode, "");
@@ -48,13 +53,13 @@ public final class JdbcDialectLoader {
     /**
      * Loads the unique JDBC Dialect that can handle the given database url.
      *
-     * @param dbType The database type.
+     * @param dbTypeOrUrl         The database type or jdbc url.
      * @param compatibleMode The compatible mode.
      * @return The loaded dialect.
      * @throws IllegalStateException if the loader cannot find exactly one dialect that can
-     *     unambiguously process the given database URL.
+     *                               unambiguously process the given database URL.
      */
-    public static JdbcDialect load(String dbType, String compatibleMode, String fieldIde) {
+    public static JdbcDialect load(String dbTypeOrUrl, String compatibleMode, String fieldIde) {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         List<JdbcDialectFactory> foundFactories = discoverFactories(cl);
 
@@ -67,17 +72,22 @@ public final class JdbcDialectLoader {
         }
 
         return dialectCache.computeIfAbsent(
-                dbType.toLowerCase(),
+                dbTypeOrUrl.toLowerCase(),
                 v -> {
                     List<JdbcDialectFactory> matchingFactories =
                             foundFactories.stream()
                                     .filter(
-                                            f ->
-                                                    f.dialectIdentifier().equalsIgnoreCase(dbType)
+                                            f -> {
+                                                if (dbTypeOrUrl.startsWith(JDBC_URL_PREFIX)) {
+                                                    return f.acceptsURL(dbTypeOrUrl);
+                                                } else {
+                                                    return f.dialectIdentifier().equalsIgnoreCase(dbTypeOrUrl)
                                                             || f.dialectIdentifier()
-                                                                    .equalsIgnoreCase(
-                                                                            GenericDialectFactory
-                                                                                    .DIALECT_NAME))
+                                                            .equalsIgnoreCase(
+                                                                    GenericDialectFactory
+                                                                            .DIALECT_NAME);
+                                                }
+                                            })
                                     .collect(Collectors.toList());
 
                     // filter out generic dialect factory
@@ -95,7 +105,7 @@ public final class JdbcDialectLoader {
                                         "Multiple jdbc dialect factories can handle dbType '%s' that implement '%s' found in the classpath.\n\n"
                                                 + "Ambiguous factory classes are:\n\n"
                                                 + "%s",
-                                        dbType,
+                                        dbTypeOrUrl,
                                         JdbcDialectFactory.class.getName(),
                                         matchingFactories.stream()
                                                 .map(f -> f.getClass().getName())
