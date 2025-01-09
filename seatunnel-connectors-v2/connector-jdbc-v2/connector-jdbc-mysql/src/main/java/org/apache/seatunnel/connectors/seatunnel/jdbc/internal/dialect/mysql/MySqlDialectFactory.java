@@ -31,6 +31,11 @@ import javax.annotation.Nonnull;
 public class MySqlDialectFactory implements JdbcDialectFactory {
 
     @Override
+    public boolean acceptsURL(String url) {
+        return url.startsWith("jdbc:mysql:");
+    }
+
+    @Override
     public String dialectIdentifier() {
         return DatabaseIdentifier.MYSQL;
     }

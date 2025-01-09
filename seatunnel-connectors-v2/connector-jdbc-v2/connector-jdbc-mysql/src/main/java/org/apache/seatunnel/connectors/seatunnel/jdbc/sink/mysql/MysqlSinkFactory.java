@@ -20,12 +20,12 @@ package org.apache.seatunnel.connectors.seatunnel.jdbc.sink.mysql;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableSinkFactory;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.DatabaseIdentifier;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.sink.JdbcSinkFactory;
+import org.apache.seatunnel.connectors.seatunnel.jdbc.sink.AbstractJdbcSinkFactory;
 
 import com.google.auto.service.AutoService;
 
 @AutoService(Factory.class)
-public class MysqlSinkFactory extends JdbcSinkFactory implements TableSinkFactory {
+public class MysqlSinkFactory extends AbstractJdbcSinkFactory implements TableSinkFactory {
     @Override
     public String factoryIdentifier() {
         return DatabaseIdentifier.MYSQL;

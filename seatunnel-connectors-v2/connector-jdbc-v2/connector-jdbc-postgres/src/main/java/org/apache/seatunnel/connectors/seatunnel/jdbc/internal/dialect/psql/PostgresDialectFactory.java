@@ -28,6 +28,10 @@ import javax.annotation.Nonnull;
 
 @AutoService(JdbcDialectFactory.class)
 public class PostgresDialectFactory implements JdbcDialectFactory {
+    @Override
+    public boolean acceptsURL(String url) {
+        return url.startsWith("jdbc:postgresql:");
+    }
 
     @Override
     public String dialectIdentifier() {

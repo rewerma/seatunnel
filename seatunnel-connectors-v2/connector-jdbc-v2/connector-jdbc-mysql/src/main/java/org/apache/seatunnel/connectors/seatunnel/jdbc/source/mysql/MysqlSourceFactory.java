@@ -20,14 +20,14 @@ package org.apache.seatunnel.connectors.seatunnel.jdbc.source.mysql;
 import org.apache.seatunnel.api.table.factory.Factory;
 import org.apache.seatunnel.api.table.factory.TableSourceFactory;
 import org.apache.seatunnel.connectors.seatunnel.jdbc.internal.dialect.DatabaseIdentifier;
-import org.apache.seatunnel.connectors.seatunnel.jdbc.source.JdbcSourceFactory;
+import org.apache.seatunnel.connectors.seatunnel.jdbc.source.AbstractJdbcSourceFactory;
 
 import com.google.auto.service.AutoService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @AutoService(Factory.class)
-public class MysqlSourceFactory extends JdbcSourceFactory implements TableSourceFactory {
+public class MysqlSourceFactory extends AbstractJdbcSourceFactory implements TableSourceFactory {
     @Override
     public String factoryIdentifier() {
         return DatabaseIdentifier.MYSQL;

@@ -14,10 +14,54 @@
     <name>SeaTunnel : Connectors V2 : Jdbc V2</name>
 
     <modules>
-        <module>jdbc-common</module>
+        <module>connector-jdbc-base</module>
         <module>connector-jdbc-mysql</module>
         <module>connector-jdbc-postgres</module>
         <module>connector-jdbc-oracle</module>
+        <module>connector-jdbc-sqlserver</module>
+        <module>connector-jdbc-dm</module>
+        <module>connector-jdbc-hive</module>
+        <module>connector-jdbc-oceanbase</module>
+        <module>connector-jdbc-db2</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <createSourcesJar>false</createSourcesJar>
+                            <shadeSourcesContent>true</shadeSourcesContent>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <relocations>
+                                <!-- rename hikari to avoid jar conflict from spark -->
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>${seatunnel.shade.package}.com.zaxxer.hikari</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

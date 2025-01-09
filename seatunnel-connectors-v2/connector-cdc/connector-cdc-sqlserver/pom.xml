@@ -46,7 +46,7 @@
 
             <dependency>
                 <groupId>org.apache.seatunnel</groupId>
-                <artifactId>connector-jdbc</artifactId>
+                <artifactId>connector-jdbc-base</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
