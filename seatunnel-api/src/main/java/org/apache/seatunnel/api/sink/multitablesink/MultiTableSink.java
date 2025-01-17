@@ -135,10 +135,10 @@ public class MultiTableSink
                 } else {
                     if (state.isEmpty()) {
                         writers.put(
-                                SinkIdentifier.of(tableIdentifier, index),
+                                SinkIdentifier.of(tablePath.toString(), index),
                                 new MultiTableTtlWriter(
                                         writers,
-                                        tableIdentifier,
+                                        tablePath.toString(),
                                         index,
                                         replicaNum,
                                         sink,
@@ -146,10 +146,10 @@ public class MultiTableSink
                                         multiTableWriterTtl));
                     } else {
                         writers.put(
-                                SinkIdentifier.of(tableIdentifier, index),
+                                SinkIdentifier.of(tablePath.toString(), index),
                                 new MultiTableTtlWriter(
                                         writers,
-                                        tableIdentifier,
+                                        tablePath.toString(),
                                         index,
                                         replicaNum,
                                         sink,
