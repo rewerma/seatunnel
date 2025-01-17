@@ -51,6 +51,7 @@ public class HiveSinkFactory
                 .optional(BaseSinkConfig.REMOTE_USER)
                 .optional(HiveConfig.HADOOP_CONF)
                 .optional(HiveConfig.HADOOP_CONF_PATH)
+                .optional(BaseSinkConfig.PARQUET_AVRO_WRITE_TIMESTAMP_AS_INT96)
                 .optional(
                         SinkCommonOptions.MULTI_TABLE_SINK_REPLICA,
                         SinkCommonOptions.MULTI_TABLE_SINK_TTL_SEC)
